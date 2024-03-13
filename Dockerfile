@@ -1,7 +1,7 @@
 FROM alpine:3
 
 RUN apk update && \
-    apk add --no-cache squid=6.6-r0 openssl iptables
+    apk add --no-cache squid=6.6-r0 openssl bash iptables
  
 WORKDIR /etc/squid/ssl_cert
 
@@ -16,11 +16,15 @@ RUN /usr/lib/squid/security_file_certgen -c -s /var/lib/ssl_db -M 4MB && \
   chown -R squid /var/lib/ssl_db
 
 COPY squid.conf /etc/squid/squid.conf
-# COPY setup.sh /setup.sh
+COPY setup.sh /setup.sh
 
-# RUN chmod +x /setup.sh
+RUN chmod +x /setup.sh
 
 EXPOSE 3128 3129
 
-CMD ["squid", "-N", "-d1"]
-# CMD ["/bin/sh", "-c", "/setup.sh && squid -N -d1"]
+VOLUME [/var/log/squid /var/spool/squid]
+
+# ENTRYPOINT ["/bin/bash", "-c", "/setup.sh"]
+# CMD ["-f" "/etc/squid/squid.conf" "-NYC"]
+
+CMD ["/bin/bash", "-c", "/setup.sh && /usr/sbin/squid -N -d1"]
