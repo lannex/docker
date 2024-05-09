@@ -1,4 +1,6 @@
-# Squid
+# Docker
 
-- dockerhub:
-    - https://hub.docker.com/repository/docker/lannexshin/squid/general
+## Dockerhub
+
+- squid:
+  - https://hub.docker.com/repository/docker/lannexshin/squid/general
