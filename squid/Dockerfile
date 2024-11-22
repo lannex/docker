@@ -12,6 +12,10 @@ RUN openssl req -new -newkey rsa:2048 -days 3650 -nodes -x509 \
 
 WORKDIR /
 
+RUN mkdir -p /var/spool/squid && \
+    chown -R squid:squid /var/spool/squid && \
+    chmod -R 750 /var/spool/squid
+
 RUN /usr/lib/squid/security_file_certgen -c -s /var/lib/ssl_db -M 4MB && \
   chown -R squid /var/lib/ssl_db
 
