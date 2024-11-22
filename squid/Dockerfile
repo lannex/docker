@@ -1,7 +1,7 @@
-FROM alpine:3
+FROM alpine:3.20
 
 RUN apk update && \
-    apk add --no-cache squid=6.6-r0 openssl bash iptables
+    apk add --no-cache squid=6.9-r0 openssl bash iptables
  
 WORKDIR /etc/squid/ssl_cert
 
